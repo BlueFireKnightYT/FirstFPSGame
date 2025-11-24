@@ -10,6 +10,9 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpHeight = 5f;
     [SerializeField] Transform gC;
+    Shooting shooting;
+    private bool sprinting;
+    
 
     [Header("Camera Look")]
     [SerializeField] Transform cam;
@@ -19,7 +22,7 @@ public class FirstPersonController : MonoBehaviour
     private float minPitch = -89f;
 
     private Vector2 lookInput = Vector2.zero;
-    private float pitch;
+    public float pitch;
     private float yaw;
 
     private void Start()
@@ -35,12 +38,24 @@ public class FirstPersonController : MonoBehaviour
             pitch = cam.localEulerAngles.x;
 
         if (pitch > 180f) pitch -= 360f;
+
+        shooting = GetComponentInChildren<Shooting>();
+        
     }
 
     private void Update()
     {
         ApplyMovement();
         ApplyLook();
+
+        if(sprinting == true)
+        {
+            speed = 10;
+        }
+        else if(sprinting == false)
+        {
+            speed = 5;
+        }
     }
 
     void ApplyMovement()
@@ -109,5 +124,38 @@ public class FirstPersonController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+    }
+
+    public void OnWeaponChange(InputAction.CallbackContext context)
+    {
+        if(context.performed && shooting.gun == "pistol")
+        {
+            shooting.pistol.SetActive(false);
+            shooting.shotgun.SetActive(true);
+        }
+
+        else if (context.performed && shooting.gun == "shotgun")
+        {
+            shooting.shotgun.SetActive(false);
+            shooting.ak.SetActive(true);
+        }
+        else if (context.performed && shooting.gun == "ak")
+        {
+            shooting.ak.SetActive(false);
+            shooting.pistol.SetActive(true);
+        }
+    }
+
+    public void OnSprint(InputAction.CallbackContext context)
+    {
+        if (context.performed && sprinting == false)
+        {
+            sprinting = true;
+        }
+        else
+        {
+            sprinting = false;
+        }
+
     }
 }
