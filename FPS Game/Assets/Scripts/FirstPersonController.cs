@@ -1,3 +1,4 @@
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,7 +21,7 @@ public class FirstPersonController : MonoBehaviour
     bool invertY = false;
     private float maxPitch = 89f;
     private float minPitch = -89f;
-
+    
     private Vector2 lookInput = Vector2.zero;
     public float pitch;
     private float yaw;
@@ -120,6 +121,22 @@ public class FirstPersonController : MonoBehaviour
         return Physics.OverlapCapsule(point1, point2, radius, floorLayer).Length > 0;
     }
 
+    public void onCrouch(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            this.transform.localScale = new Vector3(1, 0.5f, 1);
+            cam.transform.localScale = new Vector3(1, 2, 1);
+            speed = 1.5f;
+
+        }
+        if(context.canceled)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            cam.transform.localScale = new Vector3(1, 1, 1);
+            speed = 5;
+        }
+    }
     private void OnDisable()
     {
         Cursor.lockState = CursorLockMode.None;

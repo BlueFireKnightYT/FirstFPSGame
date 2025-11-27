@@ -59,6 +59,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "crouch",
+                    "type": "Button",
+                    "id": "02aa249c-2eb8-416e-bb38-068317db7e5c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -268,6 +277,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d260dfac-b862-4370-8175-cb14413796fd",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
